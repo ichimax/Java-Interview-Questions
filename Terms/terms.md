@@ -44,16 +44,20 @@ _**Описать простыми словами термины:**_
 
 это объект, который чаще всего представлен в виде набора полей и их сеттеров и геттеров без дополнительной нагрузки в виде:
 
-    Extend prespecified classes, as in
-        public class MealServlet extends HttpServlet { ...
-
-    Implement prespecified interfaces, as in
-        public class Entity implements EntityBean { ...
+Extend prespecified classes, as in
+```Java
+public class MealServlet extends HttpServlet { ...
+```
+Implement prespecified interfaces, as in
+```Java
+public class Entity implements EntityBean { ...
+```
 
 Contain prespecified annotations, as in (хотя статья на сайте Спринга допускает наличие аннотаций для POJO объектов)
-
-    @javax.persistence.Entity
-    public class Entity { ...
+```Java
+@javax.persistence.Entity
+public class Entity { ...
+```
 
 Термин POJO возник на платформе Java в качестве ответной реакции на появление платформы J2EE и ее широко распространившееся внедрение в приложениях, из-за чего, в частности, усложнился весь процесс разработки приложений. Мартин Фаулер с коллегами придумали данный термин для описания класса, свободного от «немого» кода, который требовался лишь для среды выполнения.
 
@@ -62,29 +66,31 @@ POJO был представлен в качестве альтернативы 
 POJO - это класс, который не использует специальные возможности различных фреймворков (т.е. он не прибит гвоздями к архитектуре какой-либо библиотеки, а также не привязан к фреймворку, который его использует), таких как Spring, EJB и пр. Данные фреймворки появились позже и поэтому в названии присутствует слово "старый".
 
 Пример:
-	это POJO
+это POJO
+```Java
 class Meal {
+
     private int calories;
 
     Meal getCalories() {
         return this.calories;
     }
 
-
     void setCalories(int calories) {
         this.calories = calories;
-	    }
-		}
+    }
+}
+```
 
 а это, нет 
+```Java
 class Calories {
     ...
     int calculateCalories() {
         return 42;
     }
 }
-
-
+```
 Основной целью POJO было показать, что домен приложения может быть успешно смоделирован без использования JavaBeans. Более того, JavaBeans вообще не должны быть использованы для этой цели.
 
 Таким образом, понятие POJO означает - использование настолько простых классов насколько возможно для моделирования предметной области. 
@@ -97,7 +103,9 @@ class Calories {
 должен иметь конструктор без аргументов;
 поля должны быть доступны через методы доступа get (аксессоры) и set (мутаторы);
 все переменные экземпляра JavaBean должны быть закрытыми.
+	
 Пример:
+```Java
 public class Article implements java.io.Serializable {
    private static final long serialVersionUID = 1L;
 
@@ -132,7 +140,7 @@ public class Article implements java.io.Serializable {
       this.published = published;
    }
 }
-
+```
 
 #### <a name="4">4. Entity (сущность) ⎼
 это данные, которые мы сохраняем в базу в формате базы данных, т.е. данные, приближенные к таблицам бд (типы и названия столбцов таблицы == типам и названиям полям в классе, взаимодействующему с конкретной таблицей). Хранятся в domain слое. 
