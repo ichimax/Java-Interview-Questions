@@ -100,45 +100,57 @@ class Calories {
 это класс в языке Java, написанный по определённым правилам:
 - должен быть сериализуемыми (реализовывать интерфейс `java.io.Serializable`)
 - должен иметь конструктор без аргументов
-- поля должны быть доступны через методы доступа `get` (аксессоры) и `set` (мутаторы)
-- все переменные экземпляра `JavaBean` должны быть закрытыми
+- все поля `JavaBean` должны быть закрытыми (private)
+- доступа к полям осуществляется через методы доступа `getters` (аксессоры) и `setters` (мутаторы)
+- методы equals(), hashCode() и toString() должны быть переопределены 
 	
 **Пример:**
 ```Java
-public class Article implements java.io.Serializable {
+public class Resume implements Serializable {
 
-   private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-   private int id;
-   private String content;
-   private boolean published;
+    private String uuid;
 
-   public Article() {
-   }
+    private String fullName;
 
-   public int getId() {
-      return id;
-   }
+    public Resume() {
+    }
 
-   public void setId(int id) {
-      this.id = id;
-   }
+    public String getUuid() {
+        return uuid;
+    }
+    
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
 
-   public String getContent() {
-      return content;
-   }
+    public String getFullName() {
+        return fullName;
+    }
 
-   public void setContent(String content) {
-      this.content = content;
-   }
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
 
-   public boolean isPublished() {
-      return published;
-   }
+    @Override
+    public boolean equals(Object o) {
+        if(this == o) return true;
+        if(o == null || getClass() != o.getClass()) return false;
+        Resume resume = (Resume) o;
+        return Objects.equals(uuid, resume.uuid) &&
+            Objects.equals(fullName, resume.fullName);
+    }
 
-   public void setPublished(boolean published) {
-      this.published = published;
-   }
+    @Override
+    public int hashCode() {
+        return Objects.hash(uuid, fullName);
+    }
+
+    @Override
+    public String toString() {
+        return uuid + " - " + fullName;
+    }
 }
 ```
 
